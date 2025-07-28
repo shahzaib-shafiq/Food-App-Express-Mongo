@@ -7,14 +7,16 @@ import testRoutes from './routes/testRoutes.js';
 import connectDb from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-dotenv.config(); // Ensure environment variables are loaded
-connectDb(); // Connect to MongoDB
+// import bodyParser from 'body-parser';
 const app = express();
-const port = 3000;
-
-app.use(cors());
 app.use(express.json());
+
+dotenv.config(); 
+connectDb();
+const port = 3000;
+app.use(cors());
 app.use(morgan('dev'));
+// app.use(bodyParser.json());
 
 app.use('/api/v1/test', testRoutes);
 app.use('/api/v1/auth', authRoutes);
