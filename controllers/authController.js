@@ -27,9 +27,8 @@ const registerUser = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error registering user', error: error.message });
     }
 };
-
+    
 const loginUser = async (req, res) => {
-
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -52,9 +51,8 @@ const loginUser = async (req, res) => {
 
             const refreshToken = jwt.sign(
                 { userId: user._id },
-                process.env.JWT_REFRESH_SECRET, // Use a separate secret
+                process.env.JWT_REFRESH_SECRET, 
                 { expiresIn: '7d' }
-                
             );
 
             // You can store the refreshToken in DB if needed or send it as an HttpOnly cookie

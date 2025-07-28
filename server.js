@@ -6,6 +6,7 @@ import colors from 'colors';
 import testRoutes from './routes/testRoutes.js';
 import connectDb from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 dotenv.config(); // Ensure environment variables are loaded
 connectDb(); // Connect to MongoDB
 const app = express();
@@ -17,6 +18,7 @@ app.use(morgan('dev'));
 
 app.use('/api/v1/test', testRoutes);
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/user',userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
