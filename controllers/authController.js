@@ -1,9 +1,11 @@
 import userModel from '../models/userModel.js';
-
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 const registerUser = async (req, res) => {
     // Logic for registering a user
     try {
         const { userName, email, password, phone, address } = req.body;
+        console.log(req.body)
         if (!userName || !email || !password || !phone || !address) {
             return res.status(400).json({ success: false, message: 'All fields are required' });
         }
@@ -13,7 +15,12 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ success: false, message: 'User already exists' });
         }
 
-        const user = await userModel.create({ userName, email, password, phone, adress });
+        // Hashing Password
+        // const saltRounds = 10;
+        // const hashedPassword=bcrypt.hash(password, saltRounds)
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const user = await userModel.create({ userName, email, password: hashedPassword, phone, address });
         const savedUser = await user.save();
         res.status(201).json({ message: 'User registered successfully', user: savedUser });
 
@@ -29,13 +36,15 @@ const loginUser = async (req, res) => {
         if (!email || !password) {
             return res.status(400).json({ success: false, message: 'Email and password are required' });
         }
-        const user = await userModel.findOne({ email: email, password: password });
+        const user = await userModel.findOne({ email: email });
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
-
         }
         else {
-
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return res.status(401).json({ success: false, message: 'Invalid credentials' });
+            }
             res.status(200).json({ success: true, message: 'User logged in successfully', user });
         }
 
