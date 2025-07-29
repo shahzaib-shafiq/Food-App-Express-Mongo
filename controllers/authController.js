@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 const registerUser = async (req, res) => {
     // Logic for registering a user
     try {
-        const { userName, email, password, phone, address } = req.body;
-        if (!userName || !email || !password || !phone || !address) {
+        const { userName, email, password, phone, address,answer } = req.body;
+        if (!userName || !email || !password || !phone || !address||!answer) {
             return res.status(400).json({ success: false, message: 'All fields are required' });
         }
 
@@ -19,7 +19,7 @@ const registerUser = async (req, res) => {
         // const hashedPassword=bcrypt.hash(password, saltRounds)
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const user = await userModel.create({ userName, email, password: hashedPassword, phone, address });
+        const user = await userModel.create({ userName, email, password: hashedPassword, phone, address,answer });
         const savedUser = await user.save();
         res.status(201).json({ message: 'User registered successfully', user: savedUser });
 

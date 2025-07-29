@@ -1,5 +1,5 @@
 import userModel from '../models/userModel.js';
-
+import bcrypt from 'bcrypt';
 const getUserProfile = async (req, res) => {
     try {
         const userId = req.user.userId; // Assuming userId is set in the request by authentication middleware
@@ -50,7 +50,8 @@ const updateUserProfile = async (req, res) => {
 const updateUserPassword = async (req, res) => {
   try {
     //find user
-    const user = await userModel.findById({ _id: req.body.id });
+    console.log("Request body for password update:", req.body);
+    const user = await userModel.findById({ _id: req.user.userId });
     //valdiation
     if (!user) {
       return res.status(404).send({
