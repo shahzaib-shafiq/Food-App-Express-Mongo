@@ -37,4 +37,38 @@ const createResturant = async (req, res) => {
         });
     }
 }
-export { createResturant };
+const getAllResturant = async (req, res) => {
+    try {
+        const resturants = await resturantModel.find({});
+        res.status(201).send({
+            success: true,
+            message: "All Registered Resturants Fetched ",
+            resturants,
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: "error in Fetching Resturant",
+            error,
+        });
+    }
+}
+const getResturantbyId = async (req, res) => {
+    try {
+        const resturants = await resturantModel.findOne({_id: req.params.id});
+        res.status(201).send({
+            success: true,
+            message: "Resturant Fetched Successfully",
+            resturants,
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: "Error in Fetching Resturant",
+            error,
+        });
+    }
+}
+export { createResturant,getAllResturant,getResturantbyId };

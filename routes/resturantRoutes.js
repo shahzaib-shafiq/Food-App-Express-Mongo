@@ -1,9 +1,11 @@
 import express from 'express';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import {createResturant} from '../controllers/resturantController.js';
+import {createResturant,getAllResturant,getResturantbyId} from '../controllers/resturantController.js';
 const router = express.Router()
 
 router.post('/create',authMiddleware,createResturant)
+router.get('/allresturant',authMiddleware,getAllResturant)
+router.get('/:id',authMiddleware,getResturantbyId)
 
 
 export default router;
