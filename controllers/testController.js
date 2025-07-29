@@ -11,4 +11,4 @@ const testUserController = async (req, res) => {
 
 }
 
-module.exports = { testUserController };
+export { testUserController };

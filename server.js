@@ -7,6 +7,7 @@ import testRoutes from './routes/testRoutes.js';
 import connectDb from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import resturantRoutes from './routes/resturantRoutes.js'
 // import bodyParser from 'body-parser';
 const app = express();
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use(morgan('dev'));
 app.use('/api/v1/test', testRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/user',userRoutes);
+app.use('/api/v1/resturant',resturantRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

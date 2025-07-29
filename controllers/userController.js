@@ -50,7 +50,6 @@ const updateUserProfile = async (req, res) => {
 const updateUserPassword = async (req, res) => {
   try {
     //find user
-    console.log("Request body for password update:", req.body);
     const user = await userModel.findById({ _id: req.user.userId });
     //valdiation
     if (!user) {
@@ -129,4 +128,29 @@ const resetUserPassword = async (req, res) => {
     });
   }
 };
-export { getUserProfile,updateUserProfile,updateUserPassword,resetUserPassword };
+const deleteUser = async (req, res) => {
+  try {
+    const user = await userModel.findByIdAndDelete({ _id: req.user.userId });
+
+    //Deleting User
+    if (!user) {
+      return res.status(500).send({
+        success: false,
+        message: "User Not Found",
+      });
+    }
+    
+    res.status(200).send({
+      success: true,
+      message: "User Deleted Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "eror in Deleting User",
+      error,
+    });
+  }
+};
+export { getUserProfile,updateUserProfile,updateUserPassword,resetUserPassword,deleteUser };
