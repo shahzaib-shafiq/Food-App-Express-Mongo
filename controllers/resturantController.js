@@ -56,6 +56,12 @@ const getAllResturant = async (req, res) => {
 }
 const getResturantbyId = async (req, res) => {
     try {
+        if (!req.params.id) {
+            return res.status(400).send({
+                success: false,
+                message: "Resturant ID is required",
+            });
+        }
         const resturants = await resturantModel.findOne({_id: req.params.id});
         res.status(201).send({
             success: true,
@@ -71,4 +77,28 @@ const getResturantbyId = async (req, res) => {
         });
     }
 }
-export { createResturant,getAllResturant,getResturantbyId };
+const deleteResturantById = async (req, res) => {
+    try {
+        if (!req.params.id) {
+            return res.status(400).send({
+                success: false,
+                message: "Resturant ID is required",
+            });
+        }
+        const resturants = await resturantModel.findOneAndDelete({_id: req.params.id});
+        res.status(201).send({
+            success: true,
+            message: "Resturant Delted Successfully",
+            resturants,
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: "Error in Deleting Resturant",
+            error,
+        });
+    }
+}
+
+export { createResturant,getAllResturant,getResturantbyId,deleteResturantById };
