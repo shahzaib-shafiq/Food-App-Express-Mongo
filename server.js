@@ -9,6 +9,7 @@ import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import resturantRoutes from './routes/resturantRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js';
+import foodRoutes from './routes/foodRoute.js';
 // import bodyParser from 'body-parser';
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/user',userRoutes);
 app.use('/api/v1/resturant',resturantRoutes);
 app.use('/api/v1/category',categoryRoutes);
+app.use('/api/v1/food',foodRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

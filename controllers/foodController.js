@@ -1,5 +1,6 @@
 // const foodModal = require("../models/foodModal");
 // const orderModel = require("../models/orderModel");
+import foodModel from "../models/foodModel.js";
 
 // CREATE FOOD
 const createFoodController = async (req, res) => {
@@ -23,7 +24,7 @@ const createFoodController = async (req, res) => {
         message: "Please Provide all fields",
       });
     }
-    const newFood = new foodModal({
+    const newFood = new foodModel({
       title,
       description,
       price,
@@ -55,7 +56,7 @@ const createFoodController = async (req, res) => {
 // GET ALLL FOODS
 const getAllFoodsController = async (req, res) => {
   try {
-    const foods = await foodModal.find({});
+    const foods = await foodModel.find({});
     if (!foods) {
       return res.status(404).send({
         success: false,
@@ -87,7 +88,7 @@ const getSingleFoodController = async (req, res) => {
         message: "please provide id",
       });
     }
-    const food = await foodModal.findById(foodId);
+    const food = await foodModel.findById(foodId);
     if (!food) {
       return res.status(404).send({
         success: false,
@@ -118,7 +119,7 @@ const getFoodByResturantController = async (req, res) => {
         message: "please provide id",
       });
     }
-    const food = await foodModal.find({ resturnat: resturantId });
+    const food = await foodModel.find({ resturnat: resturantId });
     if (!food) {
       return res.status(404).send({
         success: false,
@@ -150,7 +151,7 @@ const updateFoodController = async (req, res) => {
         message: "no food id was found",
       });
     }
-    const food = await foodModal.findById(foodID);
+    const food = await foodModel.findById(foodID);
     if (!food) {
       return res.status(404).send({
         success: false,
@@ -169,7 +170,7 @@ const updateFoodController = async (req, res) => {
       resturnat,
       rating,
     } = req.body;
-    const updatedFood = await foodModal.findByIdAndUpdate(
+    const updatedFood = await foodModel.findByIdAndUpdate(
       foodID,
       {
         title,
@@ -209,14 +210,14 @@ const deleteFoodController = async (req, res) => {
         message: "provide food id",
       });
     }
-    const food = await foodModal.findById(foodId);
+    const food = await foodModel.findById(foodId);
     if (!food) {
       return res.status(404).send({
         success: false,
         message: "No Food Found with id",
       });
     }
-    await foodModal.findByIdAndDelete(foodId);
+    await foodModel.findByIdAndDelete(foodId);
     res.status(200).send({
       success: true,
       message: "Food Item Dleeted ",
@@ -269,34 +270,34 @@ const placeOrderController = async (req, res) => {
 };
 
 // CHANGE ORDER STATUS
-const orderStatusController = async (req, res) => {
-  try {
-    const orderId = req.params.id;
-    if (!orderId) {
-      return res.status(404).send({
-        success: false,
-        message: "Please Provide valid order id",
-      });
-    }
-    const { status } = req.body;
-    const order = await orderModel.findByIdAndUpdate(
-      orderId,
-      { status },
-      { new: true }
-    );
-    res.status(200).send({
-      success: true,
-      message: "Order Status Updated",
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error In Order Status API",
-      error,
-    });
-  }
-};
+// const orderStatusController = async (req, res) => {
+//   try {
+//     const orderId = req.params.id;
+//     if (!orderId) {
+//       return res.status(404).send({
+//         success: false,
+//         message: "Please Provide valid order id",
+//       });
+//     }
+//     const { status } = req.body;
+//     const order = await orderModel.findByIdAndUpdate(
+//       orderId,
+//       { status },
+//       { new: true }
+//     );
+//     res.status(200).send({
+//       success: true,
+//       message: "Order Status Updated",
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       success: false,
+//       message: "Error In Order Status API",
+//       error,
+//     });
+//   }
+// };
 
 export {
   createFoodController,
@@ -306,5 +307,5 @@ export {
   updateFoodController,
   deleteFoodController,
   placeOrderController,
-  orderStatusController,
+ // orderStatusController,
 };

@@ -1,18 +1,15 @@
-const express = require("express");
+import express from 'express';
+import authMiddleware from '../middlewares/authMiddleware.js';
 
-const authMiddleware = require("../middlewares/authMiddleware");
-const {
-  createFoodController,
+import {  createFoodController,
   getAllFoodsController,
   getSingleFoodController,
   getFoodByResturantController,
   updateFoodController,
   deleteFoodController,
   placeOrderController,
-  orderStatusController,
-} = require("../controllers/foodController");
-const adminMiddleware = require("../middlewares/adminMiddleware");
-
+  // orderStatusController,
+} from '../controllers/foodController.js'
 const router = express.Router();
 
 //routes
@@ -38,11 +35,10 @@ router.delete("/delete/:id", authMiddleware, deleteFoodController);
 router.post("/placeorder", authMiddleware, placeOrderController);
 
 // ORDER STATUS
-router.post(
-  "/orderStatus/:id",
-  authMiddleware,
-  adminMiddleware,
-  orderStatusController
-);
-
-module.exports = router;
+// router.post(
+//   "/orderStatus/:id",
+//   authMiddleware,
+//   adminMiddleware,
+//   orderStatusController
+// );
+export default router;
