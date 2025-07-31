@@ -1,6 +1,7 @@
 // const foodModal = require("../models/foodModal");
 // const orderModel = require("../models/orderModel");
 import foodModel from "../models/foodModel.js";
+import orderModel from "../models/orderModel.js";
 
 // CREATE FOOD
 const createFoodController = async (req, res) => {
