@@ -1,14 +1,14 @@
 import express from 'express';
 import authMiddleware from '../middlewares/authMiddleware.js';
-
-import {  createFoodController,
+import adminMiddleware from '../middlewares/adminMiddleware.js';
+import {createFoodController,
   getAllFoodsController,
   getSingleFoodController,
   getFoodByResturantController,
   updateFoodController,
   deleteFoodController,
   placeOrderController,
-  // orderStatusController,
+  orderStatusController,
 } from '../controllers/foodController.js'
 const router = express.Router();
 
@@ -35,10 +35,10 @@ router.delete("/delete/:id", authMiddleware, deleteFoodController);
 router.post("/placeorder", authMiddleware, placeOrderController);
 
 // ORDER STATUS
-// router.post(
-//   "/orderStatus/:id",
-//   authMiddleware,
-//   adminMiddleware,
-//   orderStatusController
-// );
+router.post(
+  "/orderStatus/:id",
+  authMiddleware,
+  adminMiddleware,
+  orderStatusController
+);
 export default router;
